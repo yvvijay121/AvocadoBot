@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+
+mainClassName = 'AvocadoBot.Main'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    implementation 'org.javacord:javacord:3.1.2'
+    implementation 'org.jsoup:jsoup:1.13.1'
+    implementation 'org.json:json:20201115'
+    runtimeOnly 'org.apache.logging.log4j:log4j-core:2.11.0'
+}
