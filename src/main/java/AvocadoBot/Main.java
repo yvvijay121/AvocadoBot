@@ -7,6 +7,7 @@ package AvocadoBot;
 
 import AvocadoBot.commands.HelpCommand;
 import AvocadoBot.commands.PingCommand;
+import AvocadoBot.commands.fun.JokeCommand;
 import AvocadoBot.commands.fun.UrbanDictionaryCommand;
 import AvocadoBot.commands.fun.XKCDCommand;
 import AvocadoBot.commands.moderation.BanCommand;
@@ -17,11 +18,9 @@ import AvocadoBot.commands.moderation.TempMuteCommand;
 import AvocadoBot.commands.moderation.UnbanCommand;
 import AvocadoBot.commands.moderation.UnmuteCommand;
 import AvocadoBot.commands.moderation.UserInfoCommand;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
@@ -37,14 +36,17 @@ public class Main {
 
         // Enable debugging, if no slf4j logger was found
         FallbackLoggerConfiguration.setDebug(true);
-        
-        if (args.length != 1) {
-            System.err.println("This bot requires the bot's token as a command-line argument");
+        Properties properties = new Properties();
+
+        try (InputStream is = Main.class.getResourceAsStream("/AppTokenData.properties")) {
+            properties.load(is);
+        } catch (IOException e) {
+            System.out.println("Can't find the .properties file. Exiting the program.");
             System.exit(1);
         }
-        
-        String token = args[0];
-        
+
+        String token = properties.getProperty("DiscordDeveloperToken");
+
         // We login blocking, just because it is simpler and doesn't matter here
         DiscordApi api = new DiscordApiBuilder().setToken(token).setAllIntents().login().join();
 
@@ -65,6 +67,7 @@ public class Main {
         api.addMessageCreateListener(new UserInfoCommand(prefix));
         api.addMessageCreateListener(new UrbanDictionaryCommand(prefix));
         api.addMessageCreateListener(new XKCDCommand(prefix));
+        api.addMessageCreateListener(new JokeCommand(prefix));
         // Log a message, if the bot joined or left a server
         api.addServerJoinListener(event -> logger.info("Joined server " + event.getServer().getName()));
         api.addServerLeaveListener(event -> logger.info("Left server " + event.getServer().getName()));

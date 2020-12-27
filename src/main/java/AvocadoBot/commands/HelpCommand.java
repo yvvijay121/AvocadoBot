@@ -31,6 +31,7 @@ public class HelpCommand implements MessageCreateListener {
                     .addInlineField("`" + prefix + "userinfo" + "`", "Gets the user info of the mentioned user, or the author if user not specified.")
                     .addInlineField("`" + prefix + "udict" + "`", "Gets the definition of a specified work from Urban Dictionary, or a random word if no search specified.")
                     .addInlineField("`" + prefix + "xkcd" + "`", "Gets a random comic from XKCD.")
+                    .addInlineField("`" + prefix + "joke" + "`", "Gets a random joke from r/jokes.")
                     .setColor(new Color(204,44,44));
             event.getChannel().sendMessage(embed).exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
         }
