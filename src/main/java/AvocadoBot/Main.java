@@ -10,22 +10,16 @@ import AvocadoBot.commands.PingCommand;
 import AvocadoBot.commands.fun.JokeCommand;
 import AvocadoBot.commands.fun.UrbanDictionaryCommand;
 import AvocadoBot.commands.fun.XKCDCommand;
-import AvocadoBot.commands.moderation.BanCommand;
-import AvocadoBot.commands.moderation.ClearCommand;
-import AvocadoBot.commands.moderation.KickCommand;
-import AvocadoBot.commands.moderation.MuteCommand;
-import AvocadoBot.commands.moderation.TempMuteCommand;
-import AvocadoBot.commands.moderation.UnbanCommand;
-import AvocadoBot.commands.moderation.UnmuteCommand;
-import AvocadoBot.commands.moderation.UserInfoCommand;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import AvocadoBot.commands.moderation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.util.logging.FallbackLoggerConfiguration;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class Main {
 
