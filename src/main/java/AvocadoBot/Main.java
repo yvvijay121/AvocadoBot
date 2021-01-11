@@ -43,7 +43,6 @@ public class Main {
 
         // We login blocking, just because it is simpler and doesn't matter here
         DiscordApi api = new DiscordApiBuilder().setToken(token).setAllIntents().login().join();
-
         // Print the invite url of the bot
         logger.info("You can invite me by using the following url: " + api.createBotInvite());
         System.out.println(api.createBotInvite());
@@ -59,6 +58,7 @@ public class Main {
         api.addMessageCreateListener(new TempMuteCommand(prefix));
         api.addMessageCreateListener(new ClearCommand(prefix));
         api.addMessageCreateListener(new UserInfoCommand(prefix));
+        api.addMessageCreateListener(new ServerInfoCommand(prefix));
         api.addMessageCreateListener(new UrbanDictionaryCommand(prefix));
         api.addMessageCreateListener(new XKCDCommand(prefix));
         api.addMessageCreateListener(new JokeCommand(prefix));

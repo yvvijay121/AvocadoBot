@@ -59,7 +59,7 @@ public class JokeCommand implements MessageCreateListener {
         if (event.getMessageContent().equalsIgnoreCase(prefix + "joke")) {
             JSONObject j1 = new JSONObject();
             try {
-                URL url = new URL("https://www.reddit.com/r/jokes.json?limit=100");
+                URL url = new URL("https://www.reddit.com/r/jokes.json?limit=100?sort=hot");
                 URLConnection hc = url.openConnection();
                 hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Mobile Safari/537.36");
                 j1 = readJsonFromUrl(hc);
