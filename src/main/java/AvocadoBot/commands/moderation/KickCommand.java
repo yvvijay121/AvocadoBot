@@ -1,59 +1,60 @@
 package AvocadoBot.commands.moderation;
 
-import java.awt.Color;
+import de.btobastian.sdcf4j.Command;
+import de.btobastian.sdcf4j.CommandExecutor;
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
-import org.javacord.api.event.message.MessageCreateEvent;
-import org.javacord.api.listener.message.MessageCreateListener;
 
-public class KickCommand implements MessageCreateListener {
+import java.awt.*;
+import java.util.Arrays;
 
-    private static String prefix;
+public class KickCommand implements CommandExecutor {
 
-    public KickCommand(String pre) {
-        prefix = pre;
-    }
-
-    @Override
-    public void onMessageCreate(MessageCreateEvent event) {
-        if (event.getMessageContent().startsWith(prefix + "kick")) {
-            User userToKick = event.getMessage().getMentionedUsers().get(0);
-            String[] reasonList = event.getMessageContent().split(" ", 3);
-            boolean a = event.getMessage().getAuthor().canKickUserFromServer(userToKick);
-            try {
-                if (!(event.getMessageAuthor().getDiscriminatedName().equals(userToKick.getDiscriminatedName()))) {
-                    if (a) {
-                        if(reasonList.length > 2){
-                            event.getMessage().getServer().get().kickUser(userToKick, reasonList[2]);
-                        }else{
-                            event.getMessage().getServer().get().kickUser(userToKick);
-                        }
-                        EmbedBuilder embed = new EmbedBuilder()
-                            .setTitle("Successfully Kicked User")
-                            .setDescription(userToKick.getName() + "#" + userToKick.getDiscriminator() + " was kicked.\nReason: " + reasonList[2])
-                            .setColor(new Color(204, 44, 44));
-                        event.getChannel().sendMessage(embed);
+    @Command(aliases = {"kick"}, description = "Kicks the mentioned user.", usage = "kick <user mention> [<reason for kick>]")
+    public void onMessageCreate(Message message, TextChannel channel, Server server, String[] args) {
+        User userToKick = message.getMentionedUsers().get(0);
+        System.out.println(userToKick.getDiscriminatedName());
+        String reasonList = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+        if (reasonList.equals("")) reasonList = "No reason was provided by " + message.getAuthor().getDiscriminatedName() + ".";
+        System.out.println(reasonList);
+        boolean a = message.getAuthor().canKickUserFromServer(userToKick);
+        try {
+            if (!(message.getAuthor().getDiscriminatedName().equals(userToKick.getDiscriminatedName()))) {
+                if (a) {
+                    if (args.length > 2) {
+                        server.kickUser(userToKick, reasonList);
                     } else {
-                        EmbedBuilder embed = new EmbedBuilder()
+                        server.kickUser(userToKick);
+                    }
+                    EmbedBuilder embed = new EmbedBuilder()
+                            .setTitle("Successfully Kicked User")
+                            .setDescription(userToKick.getName() + "#" + userToKick.getDiscriminator() + " was kicked.\nReason: " + reasonList)
+                            .setColor(new Color(204, 44, 44));
+                    channel.sendMessage(embed);
+                } else {
+                    EmbedBuilder embed = new EmbedBuilder()
                             .setTitle("You don't have permissions")
                             .setDescription("You don't have permissions to kick this user.")
                             .setColor(new Color(204, 44, 44));
-                        event.getChannel().sendMessage(embed);
-                    }
-                } else {
-                    EmbedBuilder embed = new EmbedBuilder()
+                    channel.sendMessage(embed);
+                }
+            } else {
+                EmbedBuilder embed = new EmbedBuilder()
                         .setTitle("You're trying to kick yourself.")
                         .setColor(new Color(204, 44, 44));
-                    event.getChannel().sendMessage(embed);
-                }
-            } catch (Exception e) {
-                EmbedBuilder embed = new EmbedBuilder()
+                channel.sendMessage(embed);
+            }
+        } catch (Exception e) {
+            EmbedBuilder embed = new EmbedBuilder()
                     .setTitle("Something happened.")
                     .setDescription("The bot probably doesn't have permissions to kick this user, or the bot failed to kick the user.")
                     .setColor(new Color(204, 44, 44));
-                event.getChannel().sendMessage(embed);
-            }
+            channel.sendMessage(embed);
         }
     }
-
 }
+
+

@@ -20,7 +20,7 @@ public class TempMuteCommand implements MessageCreateListener {
     public void onMessageCreate(MessageCreateEvent event) {
         if (event.getMessageContent().startsWith(prefix + "tempmute")) {
             User userToMute = event.getMessage().getMentionedUsers().get(0);
-            Role r = event.getServer().get().getRolesByNameIgnoreCase("Muted").get(0);
+            Role r = event.getServer().get().getRolesByNameIgnoreCase("muted").get(0);
             String[] reasonList = event.getMessageContent().split(" ", 4);
             if (reasonList.length > 2) {
                 boolean a = event.getMessage().getAuthor().canManageRolesOnServer();

@@ -1,47 +1,40 @@
 package AvocadoBot.commands.moderation;
 
-import java.awt.Color;
+import de.btobastian.sdcf4j.Command;
+import de.btobastian.sdcf4j.CommandExecutor;
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.permission.Role;
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
-import org.javacord.api.event.message.MessageCreateEvent;
-import org.javacord.api.listener.message.MessageCreateListener;
 
-public class MuteCommand implements MessageCreateListener {
+import java.awt.*;
+import java.util.Arrays;
 
-    private static String prefix;
-
-    public MuteCommand(String pre) {
-        prefix = pre;
-    }
-
-    @Override
-    public void onMessageCreate(MessageCreateEvent event) {
-        if (event.getMessageContent().startsWith(prefix + "mute")) {
-            User userToMute = event.getMessage().getMentionedUsers().get(0);
-            Role r = event.getServer().get().getRolesByNameIgnoreCase("Muted").get(0);
-            String[] reasonList = event.getMessageContent().split(" ", 3);
-            boolean a = event.getMessage().getAuthor().canManageRolesOnServer();
-            String reason;
-            if(reasonList.length < 3){
-                reason = "Unspecified";
-            }else{
-                reason = reasonList[2];
-            }
-            if (a) {
-                userToMute.addRole(r);
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("Successfully Muted User")
-                        .setDescription(userToMute.getDiscriminatedName() + " was muted.\nReason: " + reason)
-                        .setColor(new Color(204, 44, 44));
-                event.getChannel().sendMessage(embed);
-            } else {
-                EmbedBuilder embed = new EmbedBuilder()
-                        .setTitle("You don't have permissions")
-                        .setDescription("You don't have permissions to mute this user.")
-                        .setColor(new Color(204, 44, 44));
-                event.getChannel().sendMessage(embed);
-            }
+public class MuteCommand implements CommandExecutor {
+    @Command(aliases = {"mute", "silence"}, description = "Mutes the mentioned user.", usage = "mute <user mention> [<reason for kick>]")
+    public void onMessageCreate(String[] args, Server s, Message m, TextChannel tc) {
+        User userToMute = m.getMentionedUsers().get(0);
+        Role r = s.getRolesByNameIgnoreCase("muted").get(0);
+        String reason = String.join(" ", Arrays.copyOfRange(args, 3, args.length));
+        if (reason.equals("")) {
+            reason = "Unspecified";
+        }
+        if (m.getAuthor().canManageRolesOnServer()) {
+            userToMute.addRole(r);
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Successfully Muted User")
+                    .setDescription(userToMute.getDiscriminatedName() + " was muted.\nReason: " + reason)
+                    .setColor(new Color(204, 44, 44));
+            tc.sendMessage(embed);
+        } else {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("You don't have permissions")
+                    .setDescription("You don't have permissions to mute this user.")
+                    .setColor(new Color(204, 44, 44));
+            tc.sendMessage(embed);
         }
     }
 }
+

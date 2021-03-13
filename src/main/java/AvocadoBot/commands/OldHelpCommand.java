@@ -1,19 +1,20 @@
 package AvocadoBot.commands;
 
-import java.awt.Color;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.javacord.api.util.logging.ExceptionLogger;
 
-public class HelpCommand implements MessageCreateListener {
+import java.awt.*;
+
+public class OldHelpCommand implements MessageCreateListener {
     private static String prefix;
-    
-    public HelpCommand(String pre){
+
+    public OldHelpCommand(String pre) {
         prefix = pre;
     }
-    
+
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
         if (event.getMessageContent().equalsIgnoreCase(prefix + "help")) {
@@ -32,7 +33,7 @@ public class HelpCommand implements MessageCreateListener {
                     .addInlineField("`" + prefix + "udict" + "`", "Gets the definition of a specified work from Urban Dictionary, or a random word if no search specified.")
                     .addInlineField("`" + prefix + "xkcd" + "`", "Gets a random comic from XKCD.")
                     .addInlineField("`" + prefix + "joke" + "`", "Gets a random joke from r/jokes.")
-                    .setColor(new Color(204,44,44));
+                    .setColor(new Color(204, 44, 44));
             event.getChannel().sendMessage(embed).exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
         }
     }

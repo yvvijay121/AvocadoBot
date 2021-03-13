@@ -1,11 +1,15 @@
 package AvocadoBot;
 
-import AvocadoBot.commands.HelpCommand;
 import AvocadoBot.commands.PingCommand;
 import AvocadoBot.commands.fun.JokeCommand;
+import AvocadoBot.commands.fun.MemeCommand;
 import AvocadoBot.commands.fun.UrbanDictionaryCommand;
 import AvocadoBot.commands.fun.XKCDCommand;
 import AvocadoBot.commands.moderation.*;
+import AvocadoBot.commands.HelpCommand;
+import AvocadoBot.commands.testing.ReactionTestCommand2;
+import de.btobastian.sdcf4j.CommandHandler;
+import de.btobastian.sdcf4j.handler.JavacordHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
@@ -18,8 +22,9 @@ import java.util.Properties;
 
 public class Main {
 
-    private static final String prefix = "a!";
+    public static final String prefix = "a!";
     private static final Logger logger = LogManager.getLogger(Main.class);
+    public static DiscordApi api;
 
     public static void main(String[] args) {
 
@@ -42,21 +47,25 @@ public class Main {
         logger.info("You can invite me by using the following url: " + api.createBotInvite());
         System.out.println(api.createBotInvite());
 
+        CommandHandler handler = new JavacordHandler(api);
+        handler.setDefaultPrefix(prefix);
+        handler.registerCommand(new PingCommand());
+        handler.registerCommand(new JokeCommand());
+        handler.registerCommand(new MemeCommand());
+        handler.registerCommand(new UrbanDictionaryCommand());
+        handler.registerCommand(new XKCDCommand());
+        handler.registerCommand(new KickCommand());
+        handler.registerCommand(new ClearCommand());
+        handler.registerCommand(new MuteCommand());
+        handler.registerCommand(new BanCommand());
+        handler.registerCommand(new ServerInfoCommand());
+        handler.registerCommand(new UnbanCommand());
+        handler.registerCommand(new UserInfoCommand());
+        handler.registerCommand(new HelpCommand(handler));
+
         // Add listeners
-        api.addMessageCreateListener(new PingCommand(prefix));
-        api.addMessageCreateListener(new HelpCommand(prefix));
-        api.addMessageCreateListener(new KickCommand(prefix));
-        api.addMessageCreateListener(new BanCommand(prefix));
-        api.addMessageCreateListener(new UnbanCommand(prefix));
-        api.addMessageCreateListener(new MuteCommand(prefix));
-        api.addMessageCreateListener(new UnmuteCommand(prefix));
         api.addMessageCreateListener(new TempMuteCommand(prefix));
-        api.addMessageCreateListener(new ClearCommand(prefix));
-        api.addMessageCreateListener(new UserInfoCommand(prefix));
-        api.addMessageCreateListener(new ServerInfoCommand(prefix));
-        api.addMessageCreateListener(new UrbanDictionaryCommand(prefix));
-        api.addMessageCreateListener(new XKCDCommand(prefix));
-        api.addMessageCreateListener(new JokeCommand(prefix));
+        api.addMessageCreateListener(new ReactionTestCommand2(prefix));
         // Log a message, if the bot joined or left a server
         api.addServerJoinListener(event -> logger.info("Joined server " + event.getServer().getName()));
         api.addServerLeaveListener(event -> logger.info("Left server " + event.getServer().getName()));
