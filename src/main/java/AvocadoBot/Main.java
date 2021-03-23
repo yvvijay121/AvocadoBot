@@ -1,13 +1,14 @@
 package AvocadoBot;
 
+import AvocadoBot.commands.HelpCommand;
 import AvocadoBot.commands.PingCommand;
 import AvocadoBot.commands.fun.JokeCommand;
 import AvocadoBot.commands.fun.MemeCommand;
 import AvocadoBot.commands.fun.UrbanDictionaryCommand;
 import AvocadoBot.commands.fun.XKCDCommand;
 import AvocadoBot.commands.moderation.*;
-import AvocadoBot.commands.HelpCommand;
 import AvocadoBot.commands.testing.ReactionTestCommand2;
+import AvocadoBot.commands.utility.*;
 import de.btobastian.sdcf4j.CommandHandler;
 import de.btobastian.sdcf4j.handler.JavacordHandler;
 import org.apache.logging.log4j.LogManager;
@@ -62,7 +63,9 @@ public class Main {
         handler.registerCommand(new UnbanCommand());
         handler.registerCommand(new UserInfoCommand());
         handler.registerCommand(new HelpCommand(handler));
-
+        handler.registerCommand(new AddRoleCommand());
+        handler.registerCommand(new RemoveRoleCommand());
+        handler.registerCommand(new RoleInfoCommand());
         // Add listeners
         api.addMessageCreateListener(new TempMuteCommand(prefix));
         api.addMessageCreateListener(new ReactionTestCommand2(prefix));

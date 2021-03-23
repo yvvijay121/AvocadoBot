@@ -62,9 +62,9 @@ public class UrbanDictionaryCommand implements CommandExecutor {
             }
         } else {
             StringBuilder restOfThing = new StringBuilder();
-            for (String arg : args) restOfThing.append(arg);
+            for (String arg : args) restOfThing.append(arg).append(" ");
             try {
-                Document doc = Jsoup.connect("https://www.urbandictionary.com/define.php?term=" + restOfThing).get();
+                Document doc = Jsoup.connect("https://www.urbandictionary.com/define.php?term=" + restOfThing.toString().trim()).get();
                 Element content = doc.getElementsByClass("def-panel").get(0);
                 String theWord = content.getElementsByClass("def-header").get(0).child(0).html();
                 String theDefinition = Jsoup.parse(content.getElementsByClass("meaning").get(0).html()).text();
