@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class UrbanDictionaryCommand implements CommandExecutor {
 
     @Command(aliases = {"udict", "ud", "randomword"},
-            description = "Retrieves either a random work from Urban Dictionary," +
+            description = "Retrieves either a random work from Urban Dictionary, " +
                     "or search up a word on Urban Dictionary.",
             usage = "udict [<search>]")
     public void onMessageCreate(TextChannel channel, String[] args) {
