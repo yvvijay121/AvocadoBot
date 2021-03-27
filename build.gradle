@@ -20,5 +20,4 @@ dependencies {
     implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'com.github.Bastian.sdcf4j:sdcf4j-core:v1.0.10'
     implementation 'com.github.Bastian.sdcf4j:sdcf4j-javacord:v1.0.10'
-    implementation "org.mongodb:mongodb-driver-sync:4.2.2"
 }

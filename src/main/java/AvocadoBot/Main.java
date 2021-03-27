@@ -2,10 +2,7 @@ package AvocadoBot;
 
 import AvocadoBot.commands.HelpCommand;
 import AvocadoBot.commands.PingCommand;
-import AvocadoBot.commands.fun.JokeCommand;
-import AvocadoBot.commands.fun.MemeCommand;
-import AvocadoBot.commands.fun.UrbanDictionaryCommand;
-import AvocadoBot.commands.fun.XKCDCommand;
+import AvocadoBot.commands.fun.*;
 import AvocadoBot.commands.moderation.*;
 import AvocadoBot.commands.testing.ReactionTestCommand2;
 import AvocadoBot.commands.utility.*;
@@ -66,13 +63,13 @@ public class Main {
         handler.registerCommand(new AddRoleCommand());
         handler.registerCommand(new RemoveRoleCommand());
         handler.registerCommand(new RoleInfoCommand());
+        handler.registerCommand(new EightBallCommand());
         // Add listeners
         api.addMessageCreateListener(new TempMuteCommand(prefix));
         api.addMessageCreateListener(new ReactionTestCommand2(prefix));
         // Log a message, if the bot joined or left a server
         api.addServerJoinListener(event -> logger.info("Joined server " + event.getServer().getName()));
         api.addServerLeaveListener(event -> logger.info("Left server " + event.getServer().getName()));
-
     }
 
 }
