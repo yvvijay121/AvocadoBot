@@ -1,5 +1,6 @@
 package AvocadoBot.commands.utility;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.Icon;
@@ -31,7 +32,7 @@ public class ServerInfoCommand implements CommandExecutor {
             String serverOwnerDiscriminator = "None";
             if (serverOwner != null) serverOwnerDiscriminator = serverOwner.getDiscriminatedName();
             Icon serverIcon = s.getIcon().orElse(null);
-            EmbedBuilder embed = new EmbedBuilder();
+            EmbedBuilder embed = new CustomEmbedBuilder();
             embed.setTitle("Server Info");
             embed.setThumbnail(serverIcon);
             embed.addField("Name:", sf(serverName), true);

@@ -1,5 +1,6 @@
 package AvocadoBot.commands.utility;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.activity.Activity;
@@ -29,13 +30,12 @@ public class UserInfoCommand implements CommandExecutor {
             } else {
                 u = m.getAuthor().asUser().orElseThrow();
             }
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("User Info")
                     .addField("Display Name", surroundFormatting(u.getDisplayName(s)), true)
                     .addField("Name + Discriminator", surroundFormatting(u.getDiscriminatedName()), true)
                     .addField("User Id", surroundFormatting(u.getIdAsString()), true)
-                    .setColor(new Color(204, 44, 44))
-                    .setAuthor(u);
+                    .setThumbnail(u.getAvatar());
             // Keep in mind that a message author can either be a webhook or a normal user
             embed.addField("Online Status", surroundFormatting(u.getStatus().getStatusString()), true);
             embed.addField("Connected Clients", surroundFormatting(u.getCurrentClients().toString()), true);
@@ -52,7 +52,7 @@ public class UserInfoCommand implements CommandExecutor {
             tc.sendMessage(embed)
                     .exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
         } catch (Exception e) {
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("Something went wrong.")
                     .setDescription("Try it again. If the error persists, sorry.");
             tc.sendMessage(embed);

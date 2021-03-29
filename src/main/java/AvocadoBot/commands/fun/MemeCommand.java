@@ -1,5 +1,6 @@
 package AvocadoBot.commands.fun;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.channel.TextChannel;
@@ -78,7 +79,7 @@ public class MemeCommand implements CommandExecutor {
             if (!i1.getJSONObject("data").get("link_flair_text").toString().equals("MODPOST")) {
                 String title = i1.getJSONObject("data").getString("title");
                 String memeUrl = i1.getJSONObject("data").getString("url");
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle(title)
                         .setImage(memeUrl)
                         .setFooter("This meme was scraped from r/memes.")
@@ -92,7 +93,7 @@ public class MemeCommand implements CommandExecutor {
                 }
                 String title = iw1.getJSONObject("data").getString("title");
                 String memeUrl = iw1.getJSONObject("data").getString("url");
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle(title)
                         .setImage(memeUrl)
                         .setFooter("This meme was scraped from r/memes.")

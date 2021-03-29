@@ -64,6 +64,7 @@ public class Main {
         handler.registerCommand(new RemoveRoleCommand());
         handler.registerCommand(new RoleInfoCommand());
         handler.registerCommand(new EightBallCommand());
+        handler.registerCommand(new SpamPingCommand());
         // Add listeners
         api.addMessageCreateListener(new TempMuteCommand(prefix));
         api.addMessageCreateListener(new ReactionTestCommand2(prefix));

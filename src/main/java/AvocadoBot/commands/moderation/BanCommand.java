@@ -1,5 +1,6 @@
 package AvocadoBot.commands.moderation;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.channel.TextChannel;
@@ -26,26 +27,26 @@ public class BanCommand implements CommandExecutor {
                     } else {
                         s.banUser(userToBan);
                     }
-                    EmbedBuilder embed = new EmbedBuilder()
+                    EmbedBuilder embed = new CustomEmbedBuilder()
                             .setTitle("Successfully Banned User")
                             .setDescription(userToBan.getDiscriminatedName() + " was banned.\nReason: " + reasonList)
                             .setColor(new Color(204, 44, 44));
                     tc.sendMessage(embed);
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder()
+                    EmbedBuilder embed = new CustomEmbedBuilder()
                             .setTitle("You don't have permissions")
                             .setDescription("You don't have permissions to ban this user.")
                             .setColor(new Color(204, 44, 44));
                     tc.sendMessage(embed);
                 }
             } else {
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle("You're trying to ban yourself.")
                         .setColor(new Color(204, 44, 44));
                 tc.sendMessage(embed);
             }
         } catch (Exception e) {
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("Something happened.")
                     .setDescription("The bot probably doesn't have permissions to ban this user, or the bot failed to ban the user.")
                     .setColor(new Color(204, 44, 44));

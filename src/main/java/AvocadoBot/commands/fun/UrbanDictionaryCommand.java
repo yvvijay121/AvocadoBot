@@ -1,5 +1,6 @@
 package AvocadoBot.commands.fun;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.channel.TextChannel;
@@ -38,14 +39,14 @@ public class UrbanDictionaryCommand implements CommandExecutor {
                 Element content = doc.getElementsByClass("def-panel").get(0);
                 String theWord = content.getElementsByClass("def-header").get(0).child(0).html();
                 String theDefinition = Jsoup.parse(content.getElementsByClass("meaning").get(0).html()).text();
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle(theWord)
                         .setDescription(theDefinition)
                         .setColor(new Color(204, 44, 44))
                         .setAuthor("Random Urban Dictionary Word", "https://www.urbandictionary.com/", "");
                 channel.sendMessage(embed).exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
             } catch (HttpStatusException ex) {
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle("404 Error")
                         .setDescription("Urban Dictionary doesn't have an entry for that.")
                         .setColor(new Color(204, 44, 44))
@@ -53,7 +54,7 @@ public class UrbanDictionaryCommand implements CommandExecutor {
                 channel.sendMessage(embed).exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
             } catch (IOException ex) {
                 Logger.getLogger(UrbanDictionaryCommand.class.getName()).log(Level.SEVERE, null, ex);
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle("IOException Error")
                         .setDescription("The bot couldn't connect to the server.")
                         .setColor(new Color(204, 44, 44))
@@ -68,14 +69,14 @@ public class UrbanDictionaryCommand implements CommandExecutor {
                 Element content = doc.getElementsByClass("def-panel").get(0);
                 String theWord = content.getElementsByClass("def-header").get(0).child(0).html();
                 String theDefinition = Jsoup.parse(content.getElementsByClass("meaning").get(0).html()).text();
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle(theWord)
                         .setDescription(theDefinition)
                         .setColor(new Color(204, 44, 44))
                         .setAuthor("Random Urban Dictionary Word", "https://www.urbandictionary.com/", "");
                 channel.sendMessage(embed).exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
             } catch (HttpStatusException ex) {
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle("404 Error")
                         .setDescription("Urban Dictionary doesn't have an entry for that.")
                         .setColor(new Color(204, 44, 44))
@@ -83,7 +84,7 @@ public class UrbanDictionaryCommand implements CommandExecutor {
                 channel.sendMessage(embed).exceptionally(ExceptionLogger.get(MissingPermissionsException.class));
             } catch (IOException ex) {
                 Logger.getLogger(UrbanDictionaryCommand.class.getName()).log(Level.SEVERE, null, ex);
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle("IOException Error")
                         .setDescription("The bot couldn't connect to the server.")
                         .setColor(new Color(204, 44, 44))

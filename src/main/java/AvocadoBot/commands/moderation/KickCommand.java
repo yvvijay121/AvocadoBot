@@ -1,5 +1,6 @@
 package AvocadoBot.commands.moderation;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.channel.TextChannel;
@@ -29,26 +30,26 @@ public class KickCommand implements CommandExecutor {
                     } else {
                         server.kickUser(userToKick);
                     }
-                    EmbedBuilder embed = new EmbedBuilder()
+                    EmbedBuilder embed = new CustomEmbedBuilder()
                             .setTitle("Successfully Kicked User")
                             .setDescription(userToKick.getName() + "#" + userToKick.getDiscriminator() + " was kicked.\nReason: " + reasonList)
                             .setColor(new Color(204, 44, 44));
                     channel.sendMessage(embed);
                 } else {
-                    EmbedBuilder embed = new EmbedBuilder()
+                    EmbedBuilder embed = new CustomEmbedBuilder()
                             .setTitle("You don't have permissions")
                             .setDescription("You don't have permissions to kick this user.")
                             .setColor(new Color(204, 44, 44));
                     channel.sendMessage(embed);
                 }
             } else {
-                EmbedBuilder embed = new EmbedBuilder()
+                EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle("You're trying to kick yourself.")
                         .setColor(new Color(204, 44, 44));
                 channel.sendMessage(embed);
             }
         } catch (Exception e) {
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("Something happened.")
                     .setDescription("The bot probably doesn't have permissions to kick this user, or the bot failed to kick the user.")
                     .setColor(new Color(204, 44, 44));

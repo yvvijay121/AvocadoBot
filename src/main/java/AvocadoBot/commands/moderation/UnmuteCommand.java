@@ -1,5 +1,6 @@
 package AvocadoBot.commands.moderation;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.channel.TextChannel;
@@ -21,13 +22,13 @@ public class UnmuteCommand implements CommandExecutor {
 
         if (m.getAuthor().canManageRolesOnServer()) {
             userToUnmute.removeRole(r);
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("Successfully Unmuted User")
                     .setDescription(userToUnmute.getDiscriminatedName() + " was unmuted.")
                     .setColor(new Color(204, 44, 44));
             tc.sendMessage(embed);
         } else {
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("You don't have permissions")
                     .setDescription("You don't have permissions to unmute this user.")
                     .setColor(new Color(204, 44, 44));

@@ -1,5 +1,6 @@
 package AvocadoBot.commands.fun;
 
+import AvocadoBot.CustomEmbedBuilder;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandExecutor;
 import org.javacord.api.entity.channel.TextChannel;
@@ -54,7 +55,7 @@ public class XKCDCommand implements CommandExecutor {
             String alt = j1.getString("alt");
             String title = j1.getString("safe_title");
             BufferedImage b1 = readImageFromUrl(imglink);
-            EmbedBuilder embed = new EmbedBuilder()
+            EmbedBuilder embed = new CustomEmbedBuilder()
                     .setTitle("XKCD Comic #" + num2 + ": " + title)
                     .setDescription(alt)
                     .setImage(b1)
