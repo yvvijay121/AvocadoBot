@@ -12,7 +12,6 @@ import org.javacord.api.entity.user.User;
 import org.javacord.api.exception.MissingPermissionsException;
 import org.javacord.api.util.logging.ExceptionLogger;
 
-import java.awt.*;
 import java.util.NoSuchElementException;
 
 public class UserInfoCommand implements CommandExecutor {
@@ -40,9 +39,9 @@ public class UserInfoCommand implements CommandExecutor {
             embed.addField("Online Status", surroundFormatting(u.getStatus().getStatusString()), true);
             embed.addField("Connected Clients", surroundFormatting(u.getCurrentClients().toString()), true);
             // The User#getActivity() method returns an Optional
-            embed.addField("Activity", surroundFormatting(u.getActivity().map(Activity::getName).orElse("None")), true);
+            embed.addField("Activity", surroundFormatting(u.getActivities().stream().map(Activity::getName).findFirst().orElse("None")), true);
             try {
-                embed.addField("Custom Status", surroundFormatting(u.getActivity().map(Activity::getState).orElseThrow().orElse("No Custom Status")), true);
+                embed.addField("Custom Status", surroundFormatting(u.getActivities().stream().map(Activity::getState).findFirst().orElseThrow().orElse("No Custom Status")), true);
             } catch (NoSuchElementException e) {
                 embed.addField("Custom Status", "```No Custom Status```", true);
             }

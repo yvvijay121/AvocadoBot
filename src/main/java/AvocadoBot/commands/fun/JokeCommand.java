@@ -92,7 +92,7 @@ public class JokeCommand implements CommandExecutor {
                     iw1 = ja1.getJSONObject((int) Math.round(Math.random() * ja1.length()) + 1);
                 }
                 String title = iw1.getJSONObject("data").getString("title");
-                String joke = iw1.getJSONObject("data").getString("title");
+                String joke = iw1.getJSONObject("data").getString("selftext");
                 EmbedBuilder embed = new CustomEmbedBuilder()
                         .setTitle(title)
                         .setDescription(joke)
