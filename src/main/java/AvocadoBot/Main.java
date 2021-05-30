@@ -4,7 +4,6 @@ import AvocadoBot.commands.HelpCommand;
 import AvocadoBot.commands.PingCommand;
 import AvocadoBot.commands.fun.*;
 import AvocadoBot.commands.moderation.*;
-import AvocadoBot.commands.moderation.database.RegistrationCommand;
 import AvocadoBot.commands.testing.ReactionTestCommand2;
 import AvocadoBot.commands.utility.*;
 import com.mongodb.ConnectionString;
@@ -51,11 +50,11 @@ public class Main {
 
         System.setProperty("jdk.tls.client.protocols", "TLSv1.2");
         ConnectionString connectionString = new ConnectionString(properties.getProperty("mongoDBURI"));
-        CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-        CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
+        CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
         MongoClientSettings clientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
-                .codecRegistry(codecRegistry)
+                .codecRegistry(pojoCodecRegistry)
                 .build();
 
         try (MongoClient mongoClient = MongoClients.create(clientSettings)) {
@@ -88,8 +87,6 @@ public class Main {
         handler.registerCommand(new RemoveRoleCommand());
         handler.registerCommand(new RoleInfoCommand());
         handler.registerCommand(new EightBallCommand());
-        handler.registerCommand(new SpamPingCommand());
-        handler.registerCommand(new RegistrationCommand());
         // Add listeners
         api.addMessageCreateListener(new TempMuteCommand(prefix));
         api.addMessageCreateListener(new ReactionTestCommand2(prefix));

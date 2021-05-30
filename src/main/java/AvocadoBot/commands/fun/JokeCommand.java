@@ -13,21 +13,15 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JokeCommand implements CommandExecutor {
 
-    private static String readAll(File f) throws IOException {
-        Scanner sc = new Scanner(f);
-        //StringBuffer to store the contents
-        StringBuilder sb = new StringBuilder();
-        //Appending each line to the buffer
-        while (sc.hasNext()) {
-            sb.append(" ").append(sc.nextLine());
-        }
-        return sb.toString();
+    private static String readAll(String fileName) throws IOException {
+        return String.join(" ", Files.readAllLines(Paths.get(fileName)));
     }
 
     private static JSONObject readJsonFromUrl(URLConnection url) throws IOException, JSONException {
@@ -65,7 +59,7 @@ public class JokeCommand implements CommandExecutor {
         if (j1.isEmpty()) {
             try {
                 File f2 = new File("C:\\Programming_Projects\\ResourcesForMigratableProjects\\jokes.json");
-                j1 = new JSONObject(readAll(f2));
+                j1 = new JSONObject(readAll(f2.getAbsolutePath()));
                 System.out.println("everything went fine (old read)");
             } catch (IOException ex) {
                 Logger.getLogger(JokeCommand.class.getName()).log(Level.SEVERE, null, ex);
